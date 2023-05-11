@@ -1,5 +1,5 @@
 from flask import  Flask,render_template,request
-from flask_cors import CORS,cross_origin
+# from flask_cors import CORS,cross_origin
 import pickle
 import predictfunctions
 import json
@@ -12,7 +12,7 @@ from flask import jsonify
 #     datforml = pickle.load(f)
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/predict/*": {"origins": "http://127.0.0.1"}})
+# cors = CORS(app, resources={r"/predict/*": {"origins": "http://127.0.0.1"}})
 
 if app.debug is not True:   
     from logging.handlers import RotatingFileHandler
@@ -27,7 +27,7 @@ def home():
     return render_template("genrepredict.html")
 
 @app.route("/predict/",methods=['GET','POST'])
-@cross_origin()
+# @cross_origin()
 def predict():
     try:
     # Getting the paramters from API call
