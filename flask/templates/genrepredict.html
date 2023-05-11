@@ -1,0 +1,150 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>House Price Prediction</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/static/assets/css/main.css" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="#" class="logo"><strong>House Price Prediction</strong></a>
+					<nav id="nav">
+						<a href="#">Home</a>
+					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+				</div>
+            </header>
+            
+			<section id="banner">
+				<div class="inner">
+					<header>
+						<h1>Predict Price of Housing in Boston</h1>
+					</header>
+					<footer>
+						<a href="#footer" class="button">Get Started</a>
+					</footer>
+				</div>
+			</section>
+
+        <!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+
+					<h3>Predict Price</h3>
+
+
+						<div class="field half first">
+							<label for="lstat">Percentage of Lower Status Population</label>
+							<input name="lstat" id="lstat" type="number" placeholder="Enter % lower status of the population here .." required>
+							<label for="rooms">Average Number of Rooms</label>
+							<input name="rooms" id="rooms" type="number" placeholder="Enter average number of rooms here .." required>
+							<label for="ptratio">Pupil/Teacher ratio by town</label>
+							<input name="ptratio" id="ptratio" type="number" placeholder="Enter Pupil-to-Teacher ratio here .." required>
+						</div><!--
+						<div class="field half">
+							<label for="email">Predicted Genres</label>
+							<ul style="font-size: 1.5em;">
+								<li style="display: inline-block;">Romance</li> &nbsp; |
+								<li style="display: inline-block;">Fiction</li>
+							</ul>
+                        </div>-->
+                        <div  class="field half">
+                        	<div id="genreresponse"></div>
+                        </div>
+
+						<!-- <div class="field">
+							<label for="clientmessage">Summary</label>
+							<textarea name="clientmessage" id="clientmessage" onkeypress="submitonenter(event,this)" rows="6" placeholder="Summary Here..." required></textarea>
+						</div> -->
+					<br>
+						<ul class="actions">
+                            <li><input value="Predict" class="button alt" type="submit" onclick="getResponse()"></li>
+						</ul>
+
+					<div id="result">
+				<h2 style="color:white;">
+					Here are the predicted genres:
+				</h2>
+				<hr />
+				<div id="genreresponse">
+					<h4 style="color:white">Predicted Price</h4>
+					<h3>
+						<div style="color:darkslategray" id="xgbpred"></div>
+					</h3>
+					<!-- <h4 style="color:white">Single Label prediction using SGD</h4>
+					<h3>
+						<div style="color:darkslategray" id="sgd"></div>
+					</h3>
+					<h4 style="color:white">Multi Label prediction using OneVsRest Classifier and Logistic Regression
+					</h4>
+					<h3>
+						<div style="color:darkslategray" id="onevrest"></div>
+					</h3> -->
+				</div>
+			</div>
+
+				</div>
+			</footer>
+
+			
+			<div id="survey">
+				<center>
+					<!-- script for survey monkey here -->
+				</center>
+			</div>
+
+			<script src="/static/assets/js/jquery.min.js"></script>
+			<script src="/static/assets/js/skel.min.js"></script>
+			<script src="/static/assets/js/util.js"></script>
+            <script src="/static/assets/js/main.js"></script>
+            
+            <script>
+				var survey = document.getElementById("survey");
+				survey.style.display = "none";
+
+                function submitonenter(evt, thisObj) {
+                    if (evt) { getResponse(); }
+                }
+                function getResponse() {
+                    var respl = document.getElementById('xgbpred');
+                    // var respo = document.getElementById('onevrest');
+					// var resps=document.getElementById('sgd');
+					// var summ=document.getElementById('clientmessage').value;
+					var lstat = document.getElementById('lstat').value;
+					var rooms = document.getElementById('rooms').value;
+					var ptratio = document.getElementById('ptratio').value;
+					var result = document.getElementById("result");
+                    // console.log(summ);
+					// if(summ.length == 0){
+					// 	respl.innerHTML = "Please enter a summary.";
+					// 	respo.innerHTML = "Please enter a summary.";
+					// 	resps.innerHTML = "Please enter a summary.";
+					// }
+					// else{
+						var xhr = new XMLHttpRequest();
+						var url = "/predict/?lstat=" + lstat + "&rooms=" + rooms + "&ptratio=" + ptratio;
+						console.log(url);
+						xhr.open("GET", url, true);
+						xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+						xhr.send();
+						xhr.onreadystatechange = function () {
+							if (xhr.readyState === 4 && xhr.status === 200) {
+								console.log(xhr.responseText);
+								var json = JSON.parse(xhr.responseText);
+								respl.innerHTML = json['Prediction'][0];
+								// respo.innerHTML = json['onevrest'][0].join(', ');
+								// resps.innerHTML=json['sgd'];
+								result.scrollIntoView();
+								survey.style.display = "block";
+							}
+                    	}
+					// }
+                }
+			</script>
+
+	</body>
+</html>
