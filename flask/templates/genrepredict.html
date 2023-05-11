@@ -25,7 +25,7 @@
 						<h1>Predict Price of Housing in Boston</h1>
 					</header>
 					<footer>
-						<a href="#footer" class="button">Get Started</a>
+						<a href="#" class="button">Get Started</a>
 					</footer>
 				</div>
 			</section>
@@ -67,7 +67,7 @@
 
 					<div id="result">
 				<h2 style="color:white;">
-					Here are the predicted genres:
+					Here are the results:
 				</h2>
 				<hr />
 				<div id="genreresponse">
@@ -135,7 +135,7 @@
 							if (xhr.readyState === 4 && xhr.status === 200) {
 								console.log(xhr.responseText);
 								var json = JSON.parse(xhr.responseText);
-								respl.innerHTML = json['Prediction'][0];
+								respl.innerHTML = "$ " + json['Prediction'][0]*1000;
 								// respo.innerHTML = json['onevrest'][0].join(', ');
 								// resps.innerHTML=json['sgd'];
 								result.scrollIntoView();
