@@ -52,7 +52,7 @@ def predict():
         # Also, if standardization/normalization was done, then same must be done for new input
         
         # Appending the new data with the Training data
-        scaler=pd.read_pickle('scalerNew.pkl')
+        scaler=pd.read_pickle('./scalerNew.pkl')
         # with open('./DataForML.pkl', 'rb') as f:
         #     DataForML = pickle.load(f)
         print(scaler)
